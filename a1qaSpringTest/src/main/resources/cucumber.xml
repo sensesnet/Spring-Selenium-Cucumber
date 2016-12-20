@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.cucumber"/>
+
+    <import resource="classpath*:/applicationContext.xml"/>
+
+
+                                <!-- CHROME -->
+
+    <bean id="driver" class="org.openqa.selenium.chrome.ChromeDriver"
+          destroy-method="quit" lazy-init="true" />
+
+    <bean id="sysprops"
+          class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass">
+            <value>java.lang.System</value>
+        </property>
+        <property name="targetMethod">
+            <value>setProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>webdriver.chrome.driver</value>
+                <value>src/main/resources/chromedriver.exe</value>
+            </list>
+        </property>
+    </bean>
+
+                                <!-- OPERA -->
+
+    <!--bean id="driver" class="org.openqa.selenium.opera.OperaDriver"
+          destroy-method="quit" lazy-init="true" />
+
+    <bean id="sysprops"
+          class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass">
+            <value>java.lang.System</value>
+        </property>
+        <property name="targetMethod">
+            <value>setProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>webdriver.opera.driver</value>
+                <value>src/main/resources/operadriver.exe</value>
+            </list>
+        </property>
+    </bean-->
+
+                                <!-- FIREFOX 6.0 - 45.0-->
+
+    <!--bean id="driver-firefox" class="org.openqa.selenium.firefox.FirefoxDriver" destroy-method="quit"/-->
+
+                                <!-- FIREFOX 46.0 - 48.0 (geckodriver for selenium 3.0) -->
+
+    <!--bean id="driver" class="org.openqa.selenium.firefox.FirefoxDriver"
+          destroy-method="quit" lazy-init="true" />
+
+    <bean id="sysprops"
+          class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass">
+            <value>java.lang.System</value>
+        </property>
+        <property name="targetMethod">
+            <value>setProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>webdriver.gecko.driver</value>
+                <value>src/main/resources/geckodriver.exe</value>
+            </list>
+        </property>
+    </bean-->
+
+                                <!--  IE  -->
+
+    <!--bean id="driver" class="org.openqa.selenium.ie.InternetExplorerDriver"
+          destroy-method="quit" lazy-init="true" />
+
+    <bean id="sysprops"
+          class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetClass">
+            <value>java.lang.System</value>
+        </property>
+        <property name="targetMethod">
+            <value>setProperty</value>
+        </property>
+        <property name="arguments">
+            <list>
+                <value>webdriver.ie.driver</value>
+                <value>src/main/resources/IEDriverServer.exe</value>
+            </list>
+        </property>
+    </bean-->
+
+
+</beans>

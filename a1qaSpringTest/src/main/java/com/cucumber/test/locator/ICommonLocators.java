@@ -22,13 +22,13 @@ public interface ICommonLocators {
 
     //for_step_4
 
-    String DISCOUNT_GAME_XPATH = "//*[@id='DiscountsRows']/div[%S]/a/img";
+    String DISCOUNT_GAME_XPATH = "//*[@id='DiscountsRows']/a[%S]/div[1]/img";
 
-    String LIST_VALUE_OF_SALE_XPATH ="//*[@id='DiscountsRows']/div[@class='tab_item']/div[@class='discount_block tab_item_discount']/div[@class='discount_pct']";
+    String LIST_VALUE_OF_SALE_XPATH ="//*[@id='DiscountsRows']/a/div[2]/div[1]";
 
-    String LIST_VALUE_OF_PRIZE_XPATH ="//*[@id='DiscountsRows']/div[@class='tab_item']/div[@class='discount_block tab_item_discount']/div[@class='discount_prices']/div[@class='discount_original_price']";
+    String LIST_VALUE_OF_PRIZE_XPATH ="//*[@id='DiscountsRows']/a/div[2]/div[2]/div[1]";
 
-    String LIST_VALUE_OF_PRIZE_WITH_SALE_XPATH =".//*[@id='DiscountsRows']/div[@class='tab_item']/div[@class='discount_block tab_item_discount']/div[@class='discount_prices']/div[@class='discount_final_price']";
+    String LIST_VALUE_OF_PRIZE_WITH_SALE_XPATH ="//*[@id='DiscountsRows']/a/div[2]/div[2]/div[2]";
 
     // for_step_4.1_
 

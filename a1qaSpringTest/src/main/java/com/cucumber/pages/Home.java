@@ -10,13 +10,14 @@ import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Component
 public class Home extends Page implements ICommonLocators {
 
-    private static final Logger iLogger =  Logger.getLogger(Page.class);
+    private static final Logger iLogger = Logger.getLogger(Page.class);
     private static final String URl = "http://store.steampowered.com/";
 //    private static final String URL = ResourceBundle.getBundle("resources").getString("URl");
 //    private static final String locate = ResourceBundle.getBundle("resources").getString("app.locale");
@@ -56,31 +57,34 @@ public class Home extends Page implements ICommonLocators {
         List<WebElement> listPrice = $$(By.xpath(LIST_VALUE_OF_PRIZE_XPATH));
         List<WebElement> listPriceWithSale = $$(By.xpath(LIST_VALUE_OF_PRIZE_WITH_SALE_XPATH));
 
+        //find max sale
 
-        Integer y = Integer.valueOf(listSale.get(0).getText().replaceAll("[\\D]", ""));
-        SALE = listSale.get(0).getText().replaceAll("[\\D]", "");
-        PRICE = listPrice.get(0).getText().replaceAll("[\\D]", "");
-        PriceWithSALE = listPriceWithSale.get(0).getText().replaceAll("[\\D]", "");
-
-        iLogger.info("chose Game With Max Sale loop");
-        int j = 0;
-        for (int i = 0; i < listSale.size(); i++) {
-            Integer x = Integer.valueOf(listSale.get(i).getText().replaceAll("[\\D]", ""));
-            if (y < x) {
-                y = x;
-                    SALE = listSale.get(i).getText();
-                    PRICE = listPrice.get(i).getText();
-                    PriceWithSALE = listPriceWithSale.get(i).getText();
-                j++;
-            }
+        List<Integer> saleInt = new ArrayList<>();
+        for (int i = 0; i < listPrice.size(); i++) {
+            saleInt.add(i, Integer.valueOf(listSale.get(i).getText().replaceAll("[\\D]", "")));
         }
+        int min = saleInt.get(0);
+        int p = 0, j = 0;
+        for (Integer max : saleInt) {
+            if (min < max) {
+                min = max;
+                p = j;
+                SALE = listSale.get(j).getText().replaceAll("[\\D]", "");
+                PRICE = listPrice.get(j).getText().replaceAll("[\\D]", "");
+                PriceWithSALE = listPriceWithSale.get(j).getText().replaceAll("[\\D]", "");
+            }
+            j++;
+        }
+
+
+
         iLogger.info("push link Game With Max Sale loop");
-        $(By.xpath(String.format(DISCOUNT_GAME_XPATH, Integer.toString(j + 1)))).click();
+        $(By.xpath(String.format(DISCOUNT_GAME_XPATH, Integer.toString(p + 1)))).click();
 
     }
 
     public void verifyPriceAndSale() {
-        iLogger.info("verify Price And Sale "+PriceWithSALE+"USD  "+SALE+"%");
+        iLogger.info("verify Price And Sale " + PriceWithSALE + "USD  " + SALE + "%");
         CustomSleeper.SYSTEM_SLEEPER.sleep(5000L);
         Assert.assertEquals($(By.xpath(WEB_VALUE_OF_PRICE_WITH_SALE_XPATH)).getText().replaceAll("[\\D]", ""), PriceWithSALE);
         Assert.assertEquals($(By.xpath(WEB_VALUE_OF_SALE_XPATH)).getText().replaceAll("[\\D]", ""), SALE);
@@ -107,8 +111,8 @@ public class Home extends Page implements ICommonLocators {
         fileDownloader.setURI($(By.xpath(STREAM_SETUP_BUTTON_XPATH)).getAttribute("href"));
         File steamFile = fileDownloader.downloadFile();
         String tempLocation = steamFile.getAbsolutePath();
-        iLogger.info("TEMP File Location :"+steamFile.getAbsolutePath());
-        iLogger.info("TEMP File Name :"+steamFile.getName());
+        iLogger.info("TEMP File Location :" + steamFile.getAbsolutePath());
+        iLogger.info("TEMP File Name :" + steamFile.getName());
         int httpStatusCode = fileDownloader.getLastDownloadHTTPStatus();
         Assert.assertTrue(steamFile.exists());
         Assert.assertEquals(httpStatusCode, 200);

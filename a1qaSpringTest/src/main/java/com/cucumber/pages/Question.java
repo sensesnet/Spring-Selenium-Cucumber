@@ -25,8 +25,8 @@ public class Question extends Page implements ICommonLocators {
             $(QUESTION_FORM_XPATH, question);
             QUESTIONFORM = true;
             iLogger.info("Question form was open ");
-        }catch (NoSuchElementException e){
-            iLogger.error("Question form not found: ",e);
+        } catch (NoSuchElementException e) {
+            iLogger.error("Question form not found: ", e);
             iLogger.info("Question form wasn't open ");
             QUESTIONFORM = false;
         }
@@ -49,7 +49,7 @@ public class Question extends Page implements ICommonLocators {
             clickOnAgeYearList(entity.getAgeYear());
             CustomSleeper.SYSTEM_SLEEPER.sleep(1000L);
         }
-        if (!QUESTIONFORM){
+        if (!QUESTIONFORM) {
             iLogger.info("Question form wasn't open");
         }
     }
@@ -67,10 +67,12 @@ public class Question extends Page implements ICommonLocators {
     }
 
     public void pressButton(String nameButton) {
-        if (QUESTIONFORM == true) {
+        if (QUESTIONFORM) {
             iLogger.info("Push button " + nameButton);
             $(By.xpath(QUESTION_FORM_SEND_BUTTON_XPATH)).click();
-        } else QUESTIONFORM = false;
-        iLogger.info("Question form wasn't open ");
+        }
+        if (!QUESTIONFORM) {
+            iLogger.info("Question form wasn't open ");
+        }
     }
 }

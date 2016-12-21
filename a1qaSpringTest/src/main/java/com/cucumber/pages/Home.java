@@ -107,8 +107,8 @@ public class Home extends Page implements ICommonLocators {
 
 
         FileDownloader fileDownloader = new FileDownloader(driver);
-        //fileDownloader.setURI("https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe");
-        fileDownloader.setURI($(By.xpath(STREAM_SETUP_BUTTON_XPATH)).getAttribute("href"));
+        fileDownloader.setURI("https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe");
+//        fileDownloader.setURI($(By.xpath(STREAM_SETUP_BUTTON_XPATH)).getAttribute("href"));
         File steamFile = fileDownloader.downloadFile();
         String tempLocation = steamFile.getAbsolutePath();
         iLogger.info("TEMP File Location :" + steamFile.getAbsolutePath());

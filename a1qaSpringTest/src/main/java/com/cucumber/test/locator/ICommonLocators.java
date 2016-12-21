@@ -42,8 +42,8 @@ public interface ICommonLocators {
 
     //for_step_5
 
-    String WEB_VALUE_OF_SALE_XPATH ="//*[@id='game_area_purchase']/div/div/div[2]/div/div[1]/div[@class='discount_pct']";
-    String WEB_VALUE_OF_PRICE_WITH_SALE_XPATH ="//*[@id='game_area_purchase']/div/div/div[2]/div/div[1]/div[2]/div[@class='discount_final_price']";
+    String WEB_VALUE_OF_SALE_XPATH ="//*[@id='game_area_purchase']/div/div/div/div[1]/div[1]";
+    String WEB_VALUE_OF_PRICE_WITH_SALE_XPATH ="//*[@id='game_area_purchase']/div/div/div/div[1]/div[2]/div[2]";
 
     //for_step_8
 

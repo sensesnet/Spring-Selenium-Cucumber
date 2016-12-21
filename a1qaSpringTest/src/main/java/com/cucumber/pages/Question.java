@@ -6,6 +6,7 @@ import com.cucumber.test.locator.ICommonLocators;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.springframework.stereotype.Component;
 
@@ -16,24 +17,24 @@ public class Question extends Page implements ICommonLocators {
 
     private static final Logger iLogger = Logger.getLogger(Question.class);
 
-    private Boolean QUESTIONFORM;
+    private static Boolean QUESTIONFORM = null;
 
     public void checkQuestionForm(String question) {
-        QUESTIONFORM = null;
-        iLogger.info("Check question form ");
-        WebElement element = $(QUESTION_FORM_XPATH, question);
-        if (element != null) {
-            iLogger.info("Question form was open ");
+        try {
+            iLogger.info("Check question form ");
+            $(QUESTION_FORM_XPATH, question);
             QUESTIONFORM = true;
-        } else
+            iLogger.info("Question form was open ");
+        }catch (NoSuchElementException e){
+            iLogger.error("Question form not found: ",e);
+            iLogger.info("Question form wasn't open ");
             QUESTIONFORM = false;
-        iLogger.info("Question form wasn't open ");
-
+        }
     }
 
     public void setConfidentData(List<DataEntity> entities) {
         iLogger.info("Question form was open is" + QUESTIONFORM);
-        if (QUESTIONFORM == true) {
+        if (QUESTIONFORM) {
             Assert.assertNotNull("No data to be set!", entities);
             Assert.assertTrue("Data to be set is empty!", !entities.isEmpty());
             DataEntity entity = entities.get(0);
@@ -47,6 +48,9 @@ public class Question extends Page implements ICommonLocators {
             iLogger.info("Choose ageYear: " + entity.getAgeYear());
             clickOnAgeYearList(entity.getAgeYear());
             CustomSleeper.SYSTEM_SLEEPER.sleep(1000L);
+        }
+        if (!QUESTIONFORM){
+            iLogger.info("Question form wasn't open");
         }
     }
 
